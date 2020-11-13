@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+    }
+}
+        
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '1.0'
+group = 'zone.rong' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'primalterra'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+minecraft {
+    version = "1.12.2-14.23.5.2847"
+    runDir = "run"
+    mappings = "stable_39"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://www.cursemaven.com"
+    }
+    maven {
+        url = 'https://repo.spongepowered.org/maven'
+    }
+    maven {
+        url "https://minecraft.curseforge.com/api/maven/"
+    }
+}
+
+dependencies {
+    compile files("./libs/mixinbooter-1.0.jar")
+
+    deobfCompile "curse.maven:tfcraft:3077761"
+    deobfCompile "curse.maven:primalcore:2734701"
+    deobfCompile "curse.maven:primal-tech:2801696"
+
+    provided ('org.spongepowered:mixin:0.8.1-SNAPSHOT') { // Don't include in the build
+        transitive = false
+    }
+
+}
+
+sourceSets {
+    main {
+        ext.refMap = 'mixins.primalterra.refmap.json'
+    }
+}

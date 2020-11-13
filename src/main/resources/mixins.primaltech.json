@@ -1,0 +1,11 @@
+{
+  "package": "zone.rong.primalterra.primaltech.mixins",
+  "refmap": "mixins.primalterra.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.6",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "blocks.BlockWorkStumpMixin",
+    "tiles.TileEntityWorkStumpMixin"
+  ]
+}
