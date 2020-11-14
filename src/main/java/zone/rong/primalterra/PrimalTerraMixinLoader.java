@@ -16,7 +16,7 @@ public class PrimalTerraMixinLoader {
             PrimalTerra.LOGGER.info("Primal_Tech found, loading its mixins...");
             Mixins.addConfiguration("mixins.primaltech.json");
         }
-        if (Loader.isModLoaded("primalcore")) {
+        if (Loader.isModLoaded("primal")) {
             Mixins.addConfiguration("mixins.primalcore.json");
         }
         if (PrimalTerraConfig.INSTANCE.shareTorchFunctionalities) {

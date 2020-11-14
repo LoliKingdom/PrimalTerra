@@ -17,14 +17,14 @@ public final class PrimalTerraConfig {
         PrimalTerra.LOGGER.info("Initializing config...");
     }
 
-    private Configuration config;
+    private final Configuration config;
 
     public boolean shareTorchFunctionalities = true;
 
     private PrimalTerraConfig() {
         config = new Configuration(new File(Loader.instance().getConfigDir(), "primalterra.cfg"));
 
-        shareTorchFunctionalities = config.get("shareTorchFunctionalities", "bridge", true).getBoolean();
+        shareTorchFunctionalities = config.get("bridges", "shareTorchFunctionalities", true).getBoolean();
     }
 
 }
