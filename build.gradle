@@ -45,7 +45,7 @@ repositories {
 dependencies {
     compile files("./libs/mixinbooter-1.0.jar")
 
-    deobfCompile "curse.maven:tfcraft:3077761"
+    deobfCompile "curse.maven:tfcraft:3110813"
     deobfCompile "curse.maven:primalcore:2734701"
     deobfCompile "curse.maven:primal-tech:2801696"
 
