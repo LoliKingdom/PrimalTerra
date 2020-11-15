@@ -14,7 +14,7 @@ import zone.rong.primalterra.primaltech.PlayerSensitiveHitSetter;
 @Mixin(BlockWorkStump.class)
 public class BlockWorkStumpMixin {
 
-    @Redirect(method = "onBlockActivated", at = @At(value = "INVOKE", target = "Lprimal_tech/tiles/TileEntityWorkStump;setHit(Z)V"))
+    @Redirect(method = "onBlockActivated", at = @At(value = "INVOKE", target = "Lprimal_tech/tiles/TileEntityWorkStump;setHit(Z)V", remap = false))
     private void setPlayerAndHit(TileEntityWorkStump tile, boolean isHit, World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         ((PlayerSensitiveHitSetter) tile).setHit(isHit, player);
     }
