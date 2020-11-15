@@ -19,7 +19,7 @@ public class PrimalTerraMixinLoader {
         if (Loader.isModLoaded("primal")) {
             Mixins.addConfiguration("mixins.primalcore.json");
         }
-        if (PrimalTerraConfig.INSTANCE.shareTorchFunctionalities) {
+        if (PrimalTerraConfig.INSTANCE.pc$shareTorchFunctionalities) {
             PrimalTerra.LOGGER.info("shareTorchFunctionalities is true, loading its mixins...");
         }
     }

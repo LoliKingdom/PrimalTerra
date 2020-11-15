@@ -19,12 +19,16 @@ public final class PrimalTerraConfig {
 
     private final Configuration config;
 
-    public boolean shareTorchFunctionalities = true;
+    public boolean pt$disableBed = true;
+    public boolean pt$mimicTFCBed = true;
+    public boolean pc$shareTorchFunctionalities = true;
 
     private PrimalTerraConfig() {
         config = new Configuration(new File(Loader.instance().getConfigDir(), "primalterra.cfg"));
 
-        shareTorchFunctionalities = config.get("bridges", "shareTorchFunctionalities", true).getBoolean();
+        pt$disableBed = config.get("primaltech", "disableBed", true).getBoolean();
+        pt$mimicTFCBed = config.get("primaltech", "mimicTFCBed", true).getBoolean();
+        pc$shareTorchFunctionalities = config.get("primalcore", "shareTorchFunctionalities", true).getBoolean();
     }
 
 }
