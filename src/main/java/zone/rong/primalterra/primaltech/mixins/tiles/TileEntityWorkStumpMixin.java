@@ -18,7 +18,7 @@ import zone.rong.primalterra.primaltech.PlayerSensitiveHitSetter;
 @Mixin(TileEntityWorkStump.class)
 public class TileEntityWorkStumpMixin implements PlayerSensitiveHitSetter {
 
-    @Shadow public boolean hit;
+    @Shadow(remap = false) public boolean hit;
     @Unique private EntityPlayer player;
 
     @Redirect(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/crafting/CraftingManager;getRemainingItems(Lnet/minecraft/inventory/InventoryCrafting;Lnet/minecraft/world/World;)Lnet/minecraft/util/NonNullList;"))
