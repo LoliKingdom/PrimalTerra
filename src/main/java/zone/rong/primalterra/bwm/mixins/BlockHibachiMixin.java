@@ -47,6 +47,7 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
         if (hibachi == null) {
             return false;
         }
+        System.out.println(hibachi.getInventoryStack().getItem() + " " + hibachi.getInventoryStack().getCount());
         hibachi.transferInventoryStack(player, !player.isSneaking());
         return true;
     }
@@ -55,10 +56,7 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         HibachiTileEntity hibachi = Helpers.getTE(world, pos, HibachiTileEntity.class);
         if (hibachi != null) {
-            ItemStack stack = hibachi.getInventoryStack();
-            if (!stack.isEmpty()) {
-                Helpers.spawnItemStack(world, pos, hibachi.getInventoryStack());
-            }
+            Helpers.spawnItemStack(world, pos, hibachi.getInventoryStack());
         }
     }
 
