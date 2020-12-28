@@ -17,7 +17,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.1'
+version = '0.2'
 group = 'zone.rong' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'primalterra'
 
@@ -45,9 +45,14 @@ repositories {
 dependencies {
     compile files("./libs/mixinbooter-1.0.jar")
 
+    deobfCompile "curse.maven:bwm-core:2624990"
+    deobfCompile "curse.maven:bwm-suite:2965308"
     deobfCompile "curse.maven:tfcraft:3110813"
     deobfCompile "curse.maven:primalcore:2734701"
     deobfCompile "curse.maven:primal-tech:2801696"
+    deobfCompile "curse.maven:athenaeum:3063275"
+    deobfCompile "curse.maven:dropt:2957599"
+    deobfCompile "curse.maven:pyrotech:3121005"
 
     provided ('org.spongepowered:mixin:0.8.1-SNAPSHOT') { // Don't include in the build
         transitive = false

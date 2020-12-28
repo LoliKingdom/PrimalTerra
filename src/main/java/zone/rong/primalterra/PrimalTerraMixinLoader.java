@@ -12,15 +12,20 @@ public class PrimalTerraMixinLoader {
     }
 
     {
+        if (Loader.isModLoaded("betterwithmods")) {
+            PrimalTerraLogger.LOGGER.info("BetterWithMods found, loading its mixins...");
+            Mixins.addConfiguration("mixins.bwm.json");
+        }
         if (Loader.isModLoaded("primal_tech")) {
-            PrimalTerra.LOGGER.info("Primal_Tech found, loading its mixins...");
+            PrimalTerraLogger.LOGGER.info("PrimalTech found, loading its mixins...");
             Mixins.addConfiguration("mixins.primaltech.json");
         }
         if (Loader.isModLoaded("primal")) {
+            PrimalTerraLogger.LOGGER.info("PrimalCore found, loading its mixins...");
             Mixins.addConfiguration("mixins.primalcore.json");
         }
         if (PrimalTerraConfig.INSTANCE.pc$shareTorchFunctionalities) {
-            PrimalTerra.LOGGER.info("shareTorchFunctionalities is true, loading its mixins...");
+            PrimalTerraLogger.LOGGER.info("shareTorchFunctionalities is true, loading its mixins...");
         }
     }
 

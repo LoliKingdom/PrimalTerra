@@ -14,7 +14,7 @@ public final class PrimalTerraConfig {
     }
 
     static void instantiate() {
-        PrimalTerra.LOGGER.info("Initializing config...");
+        PrimalTerraLogger.LOGGER.info("Initializing config...");
     }
 
     private final Configuration config;
