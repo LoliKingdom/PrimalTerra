@@ -1,6 +1,5 @@
 package zone.rong.primalterra;
 
-import betterwithmods.BWMod;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,8 +11,9 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import zone.rong.primalterra.bwm.HibachiTileEntity;
+import zone.rong.primalterra.bwm.tfc.TFCHibachiTileEntity;
 
-@Mod(modid = PrimalTerra.MOD_ID, name = PrimalTerra.NAME, version = "0.2", dependencies = "required:tfc")
+@Mod(modid = PrimalTerra.MOD_ID, name = PrimalTerra.NAME, version = "0.2")
 public class PrimalTerra {
 
     public static final String MOD_ID = "primalterra";
@@ -21,15 +21,15 @@ public class PrimalTerra {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        if (Loader.isModLoaded(BWMod.MODID)) {
+        if (Loader.isModLoaded("betterwithmods")) {
             MinecraftForge.EVENT_BUS.register(this);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void registerBlocks(RegistryEvent.Register<Block> event) {
-        if (Loader.isModLoaded(BWMod.MODID)) {
-            GameRegistry.registerTileEntity(HibachiTileEntity.class, new ResourceLocation(BWMod.MODID, "hibachi"));
+        if (Loader.isModLoaded("betterwithmods")) {
+            GameRegistry.registerTileEntity(Loader.isModLoaded("tfc") ? TFCHibachiTileEntity.class : HibachiTileEntity.class, new ResourceLocation("betterwithmods", "hibachi"));
         }
     }
 

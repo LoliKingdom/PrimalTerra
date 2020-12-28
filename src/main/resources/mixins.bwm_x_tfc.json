@@ -1,10 +1,11 @@
 {
-  "package": "zone.rong.primalterra.bwm.mixins",
+  "package": "zone.rong.primalterra.bwm.tfc.mixins",
   "refmap": "mixins.primalterra.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.6",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "BlockHibachiMixin"
+    "TEPlacedItemMixin",
+    "TileKilnMixin"
   ]
 }

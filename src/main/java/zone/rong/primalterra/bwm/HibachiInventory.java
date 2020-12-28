@@ -1,14 +1,7 @@
 package zone.rong.primalterra.bwm;
 
-import net.dries007.tfc.api.capability.size.CapabilityItemSize;
-import net.dries007.tfc.api.capability.size.IItemSize;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -38,20 +31,7 @@ public class HibachiInventory extends ItemStackHandler {
         if (slotStack.isEmpty()) {
             return 64;
         }
-        IItemSize size = CapabilityItemSize.getIItemSize(slotStack);
-        if (size != null) {
-            return size.getStackSize(slotStack);
-        }
         return slotStack.getMaxStackSize();
-    }
-
-    @Override
-    protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-        IItemSize size = CapabilityItemSize.getIItemSize(stack);
-        if (size != null) {
-            return Math.min(getSlotLimit(slot), size.getStackSize(stack));
-        }
-        return Math.min(getSlotLimit(slot), stack.getMaxStackSize());
     }
 
 }

@@ -1,15 +1,14 @@
 package zone.rong.primalterra.bwm;
 
-import net.dries007.tfc.objects.te.TETickCounter;
-import net.dries007.tfc.util.calendar.CalendarTFC;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,16 +18,23 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class HibachiTileEntity extends TETickCounter {
+public class HibachiTileEntity extends TileEntity implements ITickable, IHibachiTE {
 
     private final HibachiInventory inventory = new HibachiInventory();
 
-    private long endBurnTick;
+    private long burnTime;
 
     protected ItemStack getInventoryStack() {
         return inventory.getStackInSlot(0);
     }
 
+    @Override
+    public void update() {
+        burnTime--;
+        burn();
+    }
+
+    @Override
     public void transferInventoryStack(EntityPlayer player, boolean toTile) {
         if (toTile) {
             player.setHeldItem(EnumHand.MAIN_HAND, inventory.insertItem(0, player.getHeldItemMainhand(), false));
@@ -37,15 +43,9 @@ public class HibachiTileEntity extends TETickCounter {
         }
     }
 
+    @Override
     public boolean burn() {
-        if (endBurnTick > 0) { // There's an operation currently
-            if (this.getTicksSinceUpdate() > endBurnTick) { // The operation should end
-                return attemptBurn();
-            }
-        } else { // There's no operation currently and we should check if an operation could be started
-            return attemptBurn();
-        }
-        return true;
+        return burnTime > 0 || attemptBurn();
     }
 
     private boolean attemptBurn() {
@@ -53,16 +53,15 @@ public class HibachiTileEntity extends TETickCounter {
         if (fuelStack.isEmpty()) {
             return false; // Nothing in the inventory = No operations performed
         }
-        endBurnTick = TileEntityFurnace.getItemBurnTime(fuelStack);
+        burnTime = TileEntityFurnace.getItemBurnTime(fuelStack);
         inventory.extractItem(0, 1, false); // Subtract from the fuelStack
-        this.resetCounter();
         return true;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
-        this.endBurnTick = nbt.getLong("EndBurnTick");
+        this.burnTime = nbt.getLong("BurnTime");
         super.readFromNBT(nbt);
     }
 
@@ -70,7 +69,7 @@ public class HibachiTileEntity extends TETickCounter {
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setTag("inventory", inventory.serializeNBT());
-        nbt.setLong("EndBurnTick", this.endBurnTick);
+        nbt.setLong("BurnTime", this.burnTime);
         return super.writeToNBT(nbt);
     }
 
@@ -88,6 +87,7 @@ public class HibachiTileEntity extends TETickCounter {
         return null;
     }
 
+    @Override
     public void onBreakBlock(World world, BlockPos pos) {
         InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(0));
     }

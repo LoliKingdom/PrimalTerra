@@ -14,7 +14,12 @@ public class PrimalTerraMixinLoader {
     {
         if (Loader.isModLoaded("betterwithmods")) {
             PrimalTerraLogger.LOGGER.info("BetterWithMods found, loading its mixins...");
-            Mixins.addConfiguration("mixins.bwm.json");
+            if (Loader.isModLoaded("tfc")) {
+                PrimalTerraLogger.LOGGER.info("TFC also found along-side BetterWithMods, loading bridge mixins...");
+                Mixins.addConfiguration("mixins.bwm_x_tfc.json");
+            } else {
+                Mixins.addConfiguration("mixins.bwm.json");
+            }
         }
         if (Loader.isModLoaded("primal_tech")) {
             PrimalTerraLogger.LOGGER.info("PrimalTech found, loading its mixins...");

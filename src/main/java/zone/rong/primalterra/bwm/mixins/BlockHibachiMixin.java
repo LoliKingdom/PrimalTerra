@@ -2,7 +2,6 @@ package zone.rong.primalterra.bwm.mixins;
 
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockHibachi;
-import net.dries007.tfc.util.Helpers;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -10,7 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -18,11 +16,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.fml.common.Loader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import zone.rong.primalterra.Utils;
 import zone.rong.primalterra.bwm.HibachiTileEntity;
+import zone.rong.primalterra.bwm.IHibachiTE;
+import zone.rong.primalterra.bwm.tfc.TFCHibachiTileEntity;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -42,12 +43,12 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new HibachiTileEntity();
+        return Loader.isModLoaded("tfc") ? new TFCHibachiTileEntity() : new HibachiTileEntity();
     }
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float x, float y, float z) {
-        HibachiTileEntity hibachi = Helpers.getTE(world, pos, HibachiTileEntity.class);
+        IHibachiTE hibachi = Utils.getTile(world, pos, IHibachiTE.class);
         if (hibachi == null) {
             return false;
         }
@@ -57,7 +58,7 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        HibachiTileEntity hibachi = Helpers.getTE(world, pos, HibachiTileEntity.class);
+        IHibachiTE hibachi = Utils.getTile(world, pos, IHibachiTE.class);
         if (hibachi != null) {
             hibachi.onBreakBlock(world, pos);
         }
@@ -78,7 +79,7 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
         if (world.isRemote) {
             return;
         }
-        HibachiTileEntity hibachi = Helpers.getTE(world, pos, HibachiTileEntity.class);
+        IHibachiTE hibachi = Utils.getTile(world, pos, IHibachiTE.class);
         if (hibachi == null || world.getRedstonePowerFromNeighbors(pos) <= 0) {
             this.extinguish(world, pos);
             return;
@@ -137,7 +138,7 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
     @Deprecated
     @Redirect(method = "updateTick", at = @At(value = "INVOKE", target = "Lbetterwithmods/common/blocks/BlockHibachi;ignite(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", remap = false))
     private void onIgnite(BlockHibachi block, World world, BlockPos pos) {
-        HibachiTileEntity hibachi = Helpers.getTE(world, pos, HibachiTileEntity.class);
+        HibachiTileEntity hibachi = Utils.getTile(world, pos, HibachiTileEntity.class);
         if (hibachi != null) {
             ItemStack fuelStack = hibachi.getInventoryStack();
             if (!fuelStack.isEmpty()) {
