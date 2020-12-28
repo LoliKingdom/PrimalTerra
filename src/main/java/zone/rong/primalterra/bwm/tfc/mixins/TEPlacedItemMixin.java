@@ -1,4 +1,4 @@
-package zone.rong.primalterra.bwm.mixins;
+package zone.rong.primalterra.bwm.tfc.mixins;
 
 import io.netty.util.internal.UnstableApi;
 import net.dries007.tfc.objects.te.TEInventory;
@@ -6,7 +6,7 @@ import net.dries007.tfc.objects.te.TEPlacedItem;
 import net.minecraft.nbt.NBTTagCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import zone.rong.primalterra.bwm.PlacedItemProgress;
+import zone.rong.primalterra.bwm.tfc.PlacedItemProgress;
 
 @UnstableApi
 @Mixin(TEPlacedItem.class)

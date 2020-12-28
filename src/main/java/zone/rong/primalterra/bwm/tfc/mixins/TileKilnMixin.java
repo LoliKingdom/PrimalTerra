@@ -1,4 +1,4 @@
-package zone.rong.primalterra.bwm.mixins;
+package zone.rong.primalterra.bwm.tfc.mixins;
 
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockKiln;
@@ -25,7 +25,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import zone.rong.primalterra.bwm.PlacedItemProgress;
+import zone.rong.primalterra.bwm.tfc.PlacedItemProgress;
 
 import java.util.Random;
 import java.util.function.Supplier;
