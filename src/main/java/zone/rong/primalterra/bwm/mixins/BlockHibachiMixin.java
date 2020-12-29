@@ -1,5 +1,6 @@
 package zone.rong.primalterra.bwm.mixins;
 
+import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockHibachi;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
@@ -84,8 +85,15 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
             if (hibachi == null) {
                 return;
             }
-            if (state.getValue(LIT) && block instanceof BlockFire && other.getY() > pos.getY() && shouldIgnite(world, other)) {
-                world.setBlockState(other, Blocks.FIRE.getDefaultState());
+            if (state.getValue(LIT)) {
+                if (other.getY() > pos.getY()) {
+                    if (world.getBlockState(other).getBlock() == BWMBlocks.STOKED_FLAME) {
+                        return;
+                    }
+                    if (block instanceof BlockFire && shouldIgnite(world, other)) {
+                        world.setBlockState(other, Blocks.FIRE.getDefaultState());
+                    }
+                }
             }
             hibachi.attemptBurn();
         }
@@ -107,7 +115,7 @@ public abstract class BlockHibachiMixin extends Block implements ITileEntityProv
     @Overwrite(remap = false)
     private boolean shouldIgnite(World world, BlockPos pos) {
         Block block = world.getBlockState(pos).getBlock();
-        return block instanceof BlockFire || block.isReplaceable(world, pos) || block.isFlammable(world, pos, EnumFacing.DOWN);
+        return block.isReplaceable(world, pos) || block.isFlammable(world, pos, EnumFacing.DOWN);
     }
 
 }
