@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import zone.rong.primalterra.bwm.HibachiTileEntity;
-import zone.rong.primalterra.bwm.tfc.TFCHibachiTileEntity;
 
 @Mod(modid = PrimalTerra.MOD_ID, name = PrimalTerra.NAME, version = "0.2")
 public class PrimalTerra {
@@ -29,7 +28,7 @@ public class PrimalTerra {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void registerBlocks(RegistryEvent.Register<Block> event) {
         if (Loader.isModLoaded("betterwithmods")) {
-            GameRegistry.registerTileEntity(Loader.isModLoaded("tfc") ? TFCHibachiTileEntity.class : HibachiTileEntity.class, new ResourceLocation("betterwithmods", "hibachi"));
+            GameRegistry.registerTileEntity(HibachiTileEntity.class, new ResourceLocation("betterwithmods", "hibachi"));
         }
     }
 

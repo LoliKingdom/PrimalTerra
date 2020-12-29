@@ -5,6 +5,8 @@ import net.minecraftforge.fml.common.Loader;
 
 import java.io.File;
 
+// TODO
+@Deprecated
 public final class PrimalTerraConfig {
 
     public static final PrimalTerraConfig INSTANCE;
