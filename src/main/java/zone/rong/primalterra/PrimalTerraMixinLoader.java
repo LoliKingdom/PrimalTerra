@@ -31,6 +31,10 @@ public class PrimalTerraMixinLoader {
             PrimalTerraLogger.LOGGER.info("Pyrotech found, loading its mixins...");
             Mixins.addConfiguration("mixins.pyrotech.json");
         }
+        if (Loader.isModLoaded("tfc")) {
+            PrimalTerraLogger.LOGGER.info("TFC found, loading bridge mixins...");
+            Mixins.addConfiguration("mixins.tfc.json");
+        }
     }
 
 }
