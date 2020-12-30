@@ -27,6 +27,10 @@ public class PrimalTerraMixinLoader {
             PrimalTerraLogger.LOGGER.info("PrimalCore found, loading its mixins...");
             Mixins.addConfiguration("mixins.primalcore.json");
         }
+        if (Loader.isModLoaded("pyrotech")) {
+            PrimalTerraLogger.LOGGER.info("Pyrotech found, loading its mixins...");
+            Mixins.addConfiguration("mixins.pyrotech.json");
+        }
     }
 
 }
