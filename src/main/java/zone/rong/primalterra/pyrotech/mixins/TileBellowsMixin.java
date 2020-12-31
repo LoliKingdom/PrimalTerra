@@ -1,6 +1,7 @@
 package zone.rong.primalterra.pyrotech.mixins;
 
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.EnumTier;
 import com.codetaylor.mc.pyrotech.IAirflowConsumerCapability;
 import com.codetaylor.mc.pyrotech.modules.core.ModuleCore;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.tile.TileBellows;
@@ -30,20 +31,23 @@ public abstract class TileBellowsMixin extends TileEntity {
             IAirflowConsumerCapability airflowConsumer = te.getCapability(ModuleCore.CAPABILITY_AIRFLOW_CONSUMER, facing.getOpposite());
             if (airflowConsumer != null) {
                 airflowConsumer.consumeAirflow(this.getAirflow(), false);
+                return;
             }
-            return;
         }
         Block block = this.world.getBlockState(blockPos).getBlock();
         if (block instanceof IBellowsConsumerBlock) {
             ((IBellowsConsumerBlock) block).onAirIntake(null, this.world, blockPos, (int) this.getAirflow() * 250);
             return;
         }
-        if (block == Blocks.FIRE || block == BWMBlocks.STOKED_FLAME) {
-            if (world.getBlockState(blockPos.down()).getBlock() == BWMBlocks.HIBACHI) {
-                int flag = block == BWMBlocks.STOKED_FLAME ? 4 : 3;
-                world.setBlockState(blockPos, BWMBlocks.STOKED_FLAME.getDefaultState(), flag);
+        BlockPos downPos = pos.down();
+        Block downBlock = world.getBlockState(downPos).getBlock();
+        if (downBlock instanceof IBellowsConsumerBlock) {
+            ((IBellowsConsumerBlock) downBlock).onAirIntake(null, world, downPos, (int) this.getAirflow() * 250);
+        } else if (block == Blocks.FIRE || block == BWMBlocks.STOKED_FLAME) {
+            if (downBlock == BWMBlocks.HIBACHI) {
+                world.setBlockState(pos, BWMBlocks.STOKED_FLAME.getDefaultState(), world.getBlockState(pos).getBlock() == Blocks.FIRE ? 3 : 4);
             } else {
-                world.setBlockToAir(blockPos);
+                world.setBlockToAir(pos);
             }
         }
     }
