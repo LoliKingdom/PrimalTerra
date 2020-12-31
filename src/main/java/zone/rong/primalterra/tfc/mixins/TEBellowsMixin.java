@@ -27,11 +27,9 @@ import static net.minecraft.block.BlockHorizontal.FACING;
 @Mixin(TEBellows.class)
 public class TEBellowsMixin extends TEBase {
 
-    @Shadow private long lastPushed;
-
-    @Shadow @Final private static Set<Vec3i> OFFSETS;
-
-    @Shadow @Final private static int BELLOWS_AIR;
+    @Shadow(remap = false) private long lastPushed;
+    @Shadow(remap = false) @Final private static Set<Vec3i> OFFSETS;
+    @Shadow(remap = false) @Final private static int BELLOWS_AIR;
 
     /**
      * @author Rongmario

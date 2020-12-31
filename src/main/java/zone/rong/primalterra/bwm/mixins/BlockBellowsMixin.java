@@ -8,7 +8,6 @@ import com.codetaylor.mc.pyrotech.IAirflowConsumerCapability;
 import com.codetaylor.mc.pyrotech.modules.core.ModuleCore;
 import net.dries007.tfc.api.util.IBellowsConsumerBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFire;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -24,10 +23,10 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(BlockBellows.class)
 public abstract class BlockBellowsMixin {
 
-    @Shadow public abstract EnumFacing getFacing(IBlockState state);
-    @Shadow public abstract void blowItem(BlockPos pos, EnumFacing facing, EntityItem item);
-    @Shadow public abstract EnumTier getTier(World world, BlockPos pos);
-    @Shadow protected abstract void stokeFire(World world, BlockPos pos);
+    @Shadow(remap = false) public abstract EnumFacing getFacing(IBlockState state);
+    @Shadow(remap = false) public abstract void blowItem(BlockPos pos, EnumFacing facing, EntityItem item);
+    @Shadow(remap = false) public abstract EnumTier getTier(World world, BlockPos pos);
+    @Shadow(remap = false) protected abstract void stokeFire(World world, BlockPos pos);
 
     /**
      * @author Rongmario

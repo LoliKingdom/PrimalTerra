@@ -1,7 +1,6 @@
 package zone.rong.primalterra.pyrotech.mixins;
 
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.blocks.EnumTier;
 import com.codetaylor.mc.pyrotech.IAirflowConsumerCapability;
 import com.codetaylor.mc.pyrotech.modules.core.ModuleCore;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.tile.TileBellows;
@@ -18,7 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(TileBellows.class)
 public abstract class TileBellowsMixin extends TileEntity {
 
-    @Shadow protected abstract float getAirflow();
+    @Shadow(remap = false) protected abstract float getAirflow();
 
     /**
      * @author Rongmario
